@@ -1,3 +1,4 @@
+import itertools
 import time
 
 
@@ -67,7 +68,7 @@ def find_min_coins(amount, coins=[50, 25, 10, 5, 2, 1]):
 
 def run_tests(amount):
     """Функція для тестування швидкодії обох алгоритмів."""
-    print(f"\033[0;36mТестування для суми: {amount}\033[0m")
+    print(f"\033[0;36mТестування для суми: \033[1;36m{amount}\033[0m")
 
     # Тестування жадібного алгоритму
     start_time = time.time()
@@ -92,53 +93,6 @@ def run_tests(amount):
     print()
 
 
-def compare_algorithms(amount, coins=[50, 25, 10, 5, 2, 1]):
-    """Функція для порівняння кількості монет, які видають жадібний алгоритм та алгоритм динамічного програмування."""
-    differences = 0  # Лічильник розбіжностей між результатами алгоритмів
-
-    print(
-        f"\033[0;36mПорівняння алгоритмів для сум від 1 до {amount} з набором монет {coins}:\033[0m"
-    )
-
-    # Перебираємо всі суми від 1 до amount
-    for amount in range(1, amount + 1):
-        # Використовуємо жадібний алгоритм
-        greedy_result = find_coins_greedy(amount, coins)
-        greedy_count = sum(greedy_result.values())
-
-        # Використовуємо алгоритм динамічного програмування
-        dp_result = find_min_coins(amount, coins)
-        dp_count = sum(dp_result.values())
-
-        # Різниця в кількості монет для обох алгоритмів
-        count_diff = abs(greedy_count - dp_count)
-
-        # Перевіряємо, чи різниця в кількості монет більше 1
-        if count_diff:
-            differences += 1
-            print(
-                f"\033[0;31mРозбіжність в {count_diff} монету для суми \033[93m{amount}\033[0m:\033[0m"
-            )
-            print(
-                f"  \033[0;32mЖадібний алгоритм\033[0m: {greedy_result}\033[0;32m, Кількість монет:\033[0m {greedy_count}"
-            )
-            print(
-                f"  \033[0;34mДинамічне програмування\033[0m: {dp_result}\033[0;34m, Кількість монет:\033[0m {dp_count}"
-            )
-            print()
-
-    if differences == 0:
-        print(
-            "\033[0;32mРозбіжностей не знайдено. Обидва алгоритми видають однакову кількість монет для всіх сум до 1000.\033[0m"
-        )
-    else:
-        print(
-            f"\033[0;33mЗнайдено \033[1m{differences}\033[0;33m розбіжностей для сум до \033[1m{amount}\033[0;33m з набором монет \033[1m{coins}.\033[0m"
-        )
-    print()
-
-
-# Порівняння кількості, що видають обидва алгоритми для суми 1000
-compare_algorithms(1000)
-
-compare_algorithms(100, coins=[50, 25, 10, 2, 1])  # Порівняння для іншого набору монет
+# Тестування для різних сум
+for amount in [58, 100, 947, 1000, 2846, 10000, 62913, 100000, 1000000]:
+    run_tests(amount)
